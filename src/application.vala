@@ -1,6 +1,6 @@
 /* application.vala
  *
- * Copyright 2025 Unknown
+ * Copyright 2025 Vasiliy Doylov (NekoCWD) <nekocwd@mainlining.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
 public class Singularity.Application : Adw.Application {
     public Application () {
         Object (
-            application_id: "io.gitlab.nekocwd.singularity",
-            flags: ApplicationFlags.DEFAULT_FLAGS,
-            resource_base_path: "/io/gitlab/nekocwd/singularity"
+                application_id: "io.gitlab.nekocwd.singularity",
+                flags: ApplicationFlags.DEFAULT_FLAGS,
+                resource_base_path: "/io/gitlab/nekocwd/singularity"
         );
     }
 
@@ -34,7 +34,7 @@ public class Singularity.Application : Adw.Application {
             { "quit", this.quit }
         };
         this.add_action_entries (action_entries, this);
-        this.set_accels_for_action ("app.quit", {"<primary>q"});
+        this.set_accels_for_action ("app.quit", { "<primary>q" });
     }
 
     public override void activate () {
@@ -44,15 +44,15 @@ public class Singularity.Application : Adw.Application {
     }
 
     private void on_about_action () {
-        string[] developers = { "Unknown" };
+        string[] developers = { "Vasiliy Doylov (NekoCWD) <nekocwd@mainlining.org>" };
         var about = new Adw.AboutDialog () {
-            application_name = "singularity",
+            application_name = "Singularity",
             application_icon = "io.gitlab.nekocwd.singularity",
-            developer_name = "Unknown",
+            developer_name = "NekoCWD",
             translator_credits = _("translator-credits"),
-            version = "0.1.0",
+            version = Config.PACKAGE_VERSION,
             developers = developers,
-            copyright = "© 2025 Unknown",
+            copyright = "© 2025 Vasiliy Doylov (NekoCWD) nekocwd@mainlining.org",
         };
 
         about.present (this.active_window);

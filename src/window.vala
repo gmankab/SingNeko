@@ -1,6 +1,6 @@
 /* window.vala
  *
- * Copyright 2025 Unknown
+ * Copyright 2025 Vasiliy Doylov (NekoCWD) <nekocwd@mainlining.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
