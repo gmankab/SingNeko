@@ -1,0 +1,8 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+data/io.gitlab.nekocwd.singularity.desktop.in
+data/io.gitlab.nekocwd.singularity.metainfo.xml.in
+data/io.gitlab.nekocwd.singularity.gschema.xml
+src/main.vala
+src/window.vala
+src/window.ui

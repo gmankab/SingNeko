@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=singularity
+Exec=singularity
+Icon=io.gitlab.nekocwd.singularity
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=GTK;
+StartupNotify=true
+DBusActivatable=true
