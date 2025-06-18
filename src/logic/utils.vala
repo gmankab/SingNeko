@@ -43,4 +43,15 @@ namespace Singularity.Utils {
             warning("Object has no type to fix it");
         }
     }
+
+    public Json.Node serialize_string_map(Gee.Map<string, string> map) {
+        var builder = new Json.Builder();
+        builder.begin_object();
+        foreach (var kv in map) {
+            builder.set_member_name(kv.key);
+            builder.add_string_value(kv.value);
+        }
+        builder.end_object();
+        return builder.get_root();
+    }
 }
