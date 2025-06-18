@@ -1,7 +1,4 @@
 utils_sources = 'logic/utils.vala'
-singularity_sources += [
-  utils_sources,
-]
 
 singularity_deps += [
   dependency('json-glib-1.0'),
@@ -9,3 +6,9 @@ singularity_deps += [
 ]
 
 subdir('transports')
+subdir('outbounds')
+singularity_sources += [
+  utils_sources,
+  outbounds_sources,
+  transports_sources,
+]
