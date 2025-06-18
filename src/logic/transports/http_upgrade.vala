@@ -23,8 +23,8 @@
  * TYPE FIX REQUIRED
  */
 class Singularity.Transport.HttpUpgrade : Transport, Json.Serializable {
-    public string host { get; set; default = ""; }
-    public string path { get; set; default = ""; }
+    public string host { get; set; default = null; }
+    public string path { get; set; default = null; }
     public Gee.HashMap<string, string> headers { get; set; default = new Gee.HashMap<string, string> (); }
 
     construct {

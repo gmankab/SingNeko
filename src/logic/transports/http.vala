@@ -24,11 +24,11 @@
  */
 class Singularity.Transport.Http : Transport, Json.Serializable {
     public string[] host { get; set; default = new string[0]; }
-    public string path { get; set; default = ""; }
-    public string method { get; set; default = ""; }
+    public string path { get; set; default = null; }
+    public string method { get; set; default = null; }
     public Gee.HashMap<string, string> headers { get; set; default = new Gee.HashMap<string, string> (); }
-    public string idle_timeout { get; set; default = "15s"; }
-    public string ping_timeout { get; set; default = "15s"; }
+    public string idle_timeout { get; set; default = null; }
+    public string ping_timeout { get; set; default = null; }
 
     construct {
         type_name = "http";

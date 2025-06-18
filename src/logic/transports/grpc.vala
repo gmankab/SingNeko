@@ -23,9 +23,9 @@
  * DASH and TYPE FIX REQUIRED
  */
 class Singularity.Transport.GRPC : Transport, Json.Serializable {
-    public string service_name { get; set; default = "TunService"; }
-    public string idle_timeout { get; set; default = "15s"; }
-    public string ping_timeout { get; set; default = "15s"; }
+    public string service_name { get; set; default = null; }
+    public string idle_timeout { get; set; default = null; }
+    public string ping_timeout { get; set; default = null; }
     public bool permit_without_stream { get; set; default = false; }
 
     construct {

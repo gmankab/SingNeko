@@ -6,4 +6,3 @@ transports_sources = [
   'logic/transports/grpc.vala',
   'logic/transports/http_upgrade.vala',
 ]
-singularity_sources += transports_sources
