@@ -10,6 +10,8 @@ singularity_deps = [
   dependency('libadwaita-1', version: '>= 1.4'),
 ]
 
+subdir('logic')
+
 blueprints = custom_target(
   'blueprints',
   input: files(
