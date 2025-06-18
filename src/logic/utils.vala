@@ -23,8 +23,24 @@
  */
 namespace Singularity.Utils {
     /*
+     * Vala use `meow-meow-meow` as in json serialization, but we need to use
+     * `meow_meow_meow` to make our saves compatible with SingBox configuration.
+     */
+    public void fix_dash(ref Json.Node node, bool serialize = true) {
+        var type = node.get_value_type();
+        if (type == typeof (Json.Object)) {
+            var obj = node.get_object();
+            foreach (var name in obj.get_members()) {
+                var value = obj.get_member(name);
+                obj.set_member(serialize ? name.replace("-", "_") : name.replace("_", "-"), value);
+                obj.remove_member(name);
+            }
+        }
+    }
+
+    /*
      * In vala we can't use `type` as field name, but we need to use it
-     * to make out saves compatible with SingBox configuration.
+     * to make our saves compatible with SingBox configuration.
      */
     public void fix_type(ref Json.Node node) {
         const string TYPE_NAME_SRC = "type-name";
@@ -44,6 +60,9 @@ namespace Singularity.Utils {
         }
     }
 
+    /*
+     * Serialize Gee.Map<string, string>
+     */
     public Json.Node serialize_string_map(Gee.Map<string, string> map) {
         var builder = new Json.Builder();
         builder.begin_object();
