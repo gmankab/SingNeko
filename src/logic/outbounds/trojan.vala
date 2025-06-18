@@ -44,7 +44,7 @@ class Singularity.Outbound.Trojan : Dial, Json.Serializable {
 
     public override Json.Node serialize_property (string property_name, GLib.Value value, GLib.ParamSpec pspec) {
         var node = default_serialize_property (property_name, value, pspec);
-        if (property_name == "transport") {
+        if (property_name == "transport" && transport != null) {
             Utils.fix_type (ref node);
             Utils.fix_dash (ref node);
         }
