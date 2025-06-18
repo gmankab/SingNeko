@@ -73,4 +73,17 @@ namespace Singularity.Utils {
         builder.end_object();
         return builder.get_root();
     }
+
+    /*
+     * Serialize List<Object>
+     */
+    public Json.Node serialize_object_list<T> (List<T> list) {
+        var builder = new Json.Builder();
+        builder.begin_array();
+        foreach (var value in list) {
+            builder.add_value(Json.gobject_serialize((Object) value));
+        }
+        builder.end_array();
+        return builder.get_root();
+    }
 }
