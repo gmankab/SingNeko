@@ -38,5 +38,9 @@ public class Singularity.Window : Adw.ApplicationWindow {
         });
         outbounds.set_model (SingBox.instance.outbound_selection);
         outbounds.set_factory (factory);
+        close_request.connect (() => {
+            SingBox.instance.singbox.force_exit ();
+            return false;
+        });
     }
 }
