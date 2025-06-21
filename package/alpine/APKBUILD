@@ -1,0 +1,38 @@
+pkgname=singularity
+pkgver=0.1.0
+pkgrel=0
+pkgdesc="SingBox wrapper"
+url="https://git.nekocwd.duckdns.org/NekoCWD/singularity"
+arch="all"
+license="GPL-3.0-only"
+makedepends="
+	cmake
+	desktop-file-utils
+	json-glib-dev
+	gettext-dev
+	libadwaita-dev
+	libgee-dev
+	meson
+	vala
+	blueprint-compiler-dev
+	"
+source=""
+builddir="$srcdir/eyeneko-v$pkgver"
+depends="
+    sing-box
+"
+build() {
+	abuild-meson \
+		. output
+	meson compile -C output
+}
+
+check() {
+	meson test --print-errorlogs -C output
+}
+
+package() {
+	DESTDIR="$pkgdir" meson install --no-rebuild -C output
+}
+
+sha512sums=""
