@@ -31,9 +31,10 @@ namespace Singularity.Utils {
         if (type == typeof (Json.Object)) {
             var obj = node.get_object();
             foreach (var name in obj.get_members()) {
+                var new_name = serialize ? name.replace("-", "_") : name.replace("_", "-");
                 var value = obj.get_member(name);
-                obj.set_member(serialize ? name.replace("-", "_") : name.replace("_", "-"), value);
                 obj.remove_member(name);
+                obj.set_member(new_name, value);
             }
         }
     }
