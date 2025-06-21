@@ -1,4 +1,4 @@
-/* trojan.vala
+/* vless.vala
  *
  * Copyright 2025 Vasiliy Doylov (NekoCWD) <nekocwd@mainlining.org>
  *
@@ -19,24 +19,25 @@
  */
 
 /*
- * Trojan outbound.
+ * Vless outbound.
  * DASH and TYPE FIX REQUIRED
  */
-class Singularity.Outbound.Trojan : Dial, Json.Serializable {
+class Singularity.Outbound.Vless : Dial, Json.Serializable {
     public string server { get; set; default = null; }
     public int64 server_port { get; set; default = 1080; }
-    public string password { get; set; default = null; }
+    public string uuid { get; set; default = null; }
+    public string flow { get; set; default = null; }
     public string network { get; set; default = null; }
-    public Transport.Transport transport { get; set; default = null; }
-
     public TLS tls { get; set; default = null; }
+    public string packet_encoding { get; set; default = null; }
+    public Transport.Transport transport { get; set; default = null; }
     /*
      * public Multiplex multiplex { get; set; default = null; }
      * TODO: Implement Multiplex
      */
 
     construct {
-        type_name = "trojan";
+        type_name = "vless";
     }
 
     public override Json.Node serialize_property (string property_name, GLib.Value value, GLib.ParamSpec pspec) {

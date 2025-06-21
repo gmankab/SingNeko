@@ -13,4 +13,6 @@ singularity_sources += [
   outbounds_sources,
   transports_sources,
   config_sources,
+  'logic/tls.vala',
+  'logic/error.vala',
 ]

@@ -1,4 +1,4 @@
-/* trojan.vala
+/* tls.vala
  *
  * Copyright 2025 Vasiliy Doylov (NekoCWD) <nekocwd@mainlining.org>
  *
@@ -17,35 +17,26 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
-
-/*
- * Trojan outbound.
- * DASH and TYPE FIX REQUIRED
- */
-class Singularity.Outbound.Trojan : Dial, Json.Serializable {
-    public string server { get; set; default = null; }
-    public int64 server_port { get; set; default = 1080; }
-    public string password { get; set; default = null; }
-    public string network { get; set; default = null; }
-    public Transport.Transport transport { get; set; default = null; }
-
-    public TLS tls { get; set; default = null; }
-    /*
-     * public Multiplex multiplex { get; set; default = null; }
-     * TODO: Implement Multiplex
-     */
-
-    construct {
-        type_name = "trojan";
+class Singularity.TLS : Object, Json.Serializable {
+    public class Reality : Object, Json.Serializable {
+        public bool enabled { get; set; default = false; }
+        public string public_key { get; set; default = null; }
+        public string short_id { get; set; default = null; }
     }
+
+    public class UTLS : Object, Json.Serializable {
+        public bool enabled { get; set; }
+        public string fingerprint { get; set; default = ""; }
+    }
+    public bool enabled { get; construct set; }
+    public bool insecure { get; construct set; }
+    public string server_name { get; set; default = null; }
+    public Reality reality { get; set; default = null; }
+    public UTLS utls { get; set; default = null; }
 
     public override Json.Node serialize_property (string property_name, GLib.Value value, GLib.ParamSpec pspec) {
         var node = default_serialize_property (property_name, value, pspec);
-        if (property_name == "transport" && transport != null) {
-            Utils.fix_type (ref node);
-            Utils.fix_dash (ref node);
-        }
-        if (property_name == "tls" && tls != null) {
+        if (property_name == "reality" && reality != null) {
             Utils.fix_dash (ref node);
         }
         return node;
