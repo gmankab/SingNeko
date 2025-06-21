@@ -22,6 +22,7 @@ class Singularity.Outbound.Outbound : Object, Json.Serializable {
     // We can't use name `type` in vala
     public string type_name { get; construct set; default = ""; }
     public string tag { get; set; default = "proxy"; }
+    public string name; // Not a property
 
     public static Outbound parse_uri (string profile) throws UriError, ParseError {
         Uri uri = null;
@@ -130,7 +131,7 @@ class Singularity.Outbound.Outbound : Object, Json.Serializable {
             warning ("Unknown scheme %s", scheme);
             break;
         }
-
+        outbound.name = name;
         return outbound;
     }
 }

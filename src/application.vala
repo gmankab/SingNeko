@@ -41,6 +41,11 @@ public class Singularity.Application : Adw.Application {
         base.activate ();
         var win = this.active_window ?? new Singularity.Window (this);
         win.present ();
+        var styling = new Gtk.CssProvider ();
+        styling.load_from_resource ("/io/gitlab/nekocwd/singularity/gtk/style.css");
+        Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (),
+                                                   styling,
+                                                   Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
 
     private void on_about_action () {

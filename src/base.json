@@ -1,0 +1,31 @@
+{
+  "endpoints": [],
+  "experimental": {
+    "clash_api": {
+      "default_mode": ""
+    }
+  },
+  "inbounds": [
+    {
+      "domain_strategy": "",
+      "listen": "127.0.0.1",
+      "listen_port": 2080,
+      "tag": "mixed-in",
+      "type": "mixed"
+    }
+  ],
+  "log": {
+    "level": "info"
+  },
+  "route": {
+    "final": "proxy",
+    "find_process": true,
+    "rule_set": [],
+    "rules": [
+      {
+        "action": "sniff",
+        "inbound": ["mixed-in"]
+      }
+    ]
+  }
+}

@@ -1,7 +1,8 @@
 singularity_sources = [
   'main.vala',
   'application.vala',
-  'window.vala',
+  'gtk/window.vala',
+  'gtk/outbound-row.vala',
 ]
 
 singularity_deps = [
@@ -16,7 +17,8 @@ blueprints = custom_target(
   'blueprints',
   input: files(
     'gtk/help-overlay.blp',
-    'window.blp',
+    'gtk/outbound-row.blp',
+    'gtk/window.blp',
   ),
   output: '.',
   command: [

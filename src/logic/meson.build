@@ -15,4 +15,5 @@ singularity_sources += [
   config_sources,
   'logic/tls.vala',
   'logic/error.vala',
+  'logic/singbox.vala',
 ]

@@ -1,3 +1,6 @@
-# singularity
+# Singularity
 
-A description of this project.
+SingBox wrapper.
+
+## ENV variables:
+ - `SUB_FILE` = `.config/Singularity/subscription` - path to subscription file

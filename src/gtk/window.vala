@@ -18,12 +18,25 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-[GtkTemplate (ui = "/io/gitlab/nekocwd/singularity/window.ui")]
+[GtkTemplate (ui = "/io/gitlab/nekocwd/singularity/gtk/window.ui")]
 public class Singularity.Window : Adw.ApplicationWindow {
     [GtkChild]
-    private unowned Gtk.Label label;
+    private unowned Gtk.ListView outbounds;
 
     public Window (Gtk.Application app) {
         Object (application: app);
+        var factory = new Gtk.SignalListItemFactory ();
+        factory.setup.connect ((obj) => {
+            var item = (Gtk.ListItem) obj;
+            item.set_child (new Ui.OutboundRow ());
+        });
+        factory.bind.connect ((obj) => {
+            var item = (Gtk.ListItem) obj;
+            var row = (Ui.OutboundRow) item.child;
+            var data = (Outbound.Outbound) item.item;
+            row.set_outbound (data);
+        });
+        outbounds.set_model (SingBox.instance.outbound_selection);
+        outbounds.set_factory (factory);
     }
 }

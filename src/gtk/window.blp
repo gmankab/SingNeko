@@ -18,12 +18,17 @@ template $SingularityWindow: Adw.ApplicationWindow {
       }
     }
 
-    content: Label label {
-      label: _("Hello, World!");
+    content: Adw.Clamp {
+      ScrolledWindow {
+        ListView outbounds {
+          halign: fill;
+          valign: start;
 
-      styles [
-        "title-1",
-      ]
+          styles [
+            "card",
+          ]
+        }
+      }
     };
   };
 }
