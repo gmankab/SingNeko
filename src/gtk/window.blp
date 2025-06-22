@@ -20,12 +20,16 @@ template $SingularityWindow: Adw.ApplicationWindow {
 
     content: Adw.Clamp {
       ScrolledWindow {
+        hscrollbar-policy: never;
+
         ListView outbounds {
+          margin-end: 12;
+          margin-start: 12;
           halign: fill;
           valign: start;
 
           styles [
-            "card",
+            "outbound-list",
           ]
         }
       }
