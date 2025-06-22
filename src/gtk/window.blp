@@ -9,6 +9,10 @@ template $SingularityWindow: Adw.ApplicationWindow {
   content: Adw.ToolbarView {
     [top]
     Adw.HeaderBar {
+      styles [
+        "flat",
+      ]
+
       [end]
       MenuButton {
         primary: true;
@@ -18,21 +22,45 @@ template $SingularityWindow: Adw.ApplicationWindow {
       }
     }
 
-    content: Adw.Clamp {
-      ScrolledWindow {
-        hscrollbar-policy: never;
+    content: Adw.BottomSheet sheet {
+      styles [
+        "singbox-status",
+      ]
 
-        ListView outbounds {
-          margin-end: 12;
-          margin-start: 12;
-          halign: fill;
-          valign: start;
+      content: Adw.Clamp {
+        ScrolledWindow {
+          hscrollbar-policy: never;
 
-          styles [
-            "outbound-list",
-          ]
+          ListView outbounds {
+            margin-end: 12;
+            margin-start: 12;
+            halign: fill;
+            valign: start;
+
+            styles [
+              "outbound-list",
+            ]
+          }
         }
-      }
+      };
+
+      bottom-bar: Label singbox_status {};
+
+      sheet: ScrolledWindow {
+        propagate-natural-height: true;
+
+        TextView {
+          styles [
+            "singbox-log",
+          ]
+
+          editable: false;
+          cursor-visible: false;
+          monospace: true;
+
+          buffer: TextBuffer singbox_log {};
+        }
+      };
     };
   };
 }

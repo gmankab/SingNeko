@@ -18,28 +18,50 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-[GtkTemplate (ui = "/io/gitlab/nekocwd/singularity/gtk/window.ui")]
+[GtkTemplate(ui = "/io/gitlab/nekocwd/singularity/gtk/window.ui")]
 public class Singularity.Window : Adw.ApplicationWindow {
     [GtkChild]
+    private unowned Adw.BottomSheet sheet;
+    [GtkChild]
     private unowned Gtk.ListView outbounds;
+    [GtkChild]
+    private unowned Gtk.TextBuffer singbox_log;
+    [GtkChild]
+    private unowned Gtk.Label singbox_status;
 
-    public Window (Gtk.Application app) {
-        Object (application: app);
-        var factory = new Gtk.SignalListItemFactory ();
-        factory.setup.connect ((obj) => {
+    private void on_singbox_status_change() {
+        var status = SingBox.instance.singbox_status;
+        singbox_status.label = "%s %s".printf(_("SingBox"), status ? _("running") : _("stopped"));
+        if (status) {
+            sheet.remove_css_class("singbox-fail");
+        } else {
+            sheet.add_css_class("singbox-fail");
+        }
+    }
+
+    public Window(Gtk.Application app) {
+        Object(application: app);
+
+        SingBox.instance.notify["singbox-status"].connect(() => on_singbox_status_change());
+        SingBox.instance.singbox_message.connect((message) => singbox_log.text += "\n" + message);
+        on_singbox_status_change();
+
+        var factory = new Gtk.SignalListItemFactory();
+        factory.setup.connect((obj) => {
             var item = (Gtk.ListItem) obj;
-            item.set_child (new Ui.OutboundRow ());
+            item.set_child(new Ui.OutboundRow());
         });
-        factory.bind.connect ((obj) => {
+        factory.bind.connect((obj) => {
             var item = (Gtk.ListItem) obj;
             var row = (Ui.OutboundRow) item.child;
             var data = (Outbound.Outbound) item.item;
-            row.set_outbound (data);
+            row.set_outbound(data);
         });
-        outbounds.set_model (SingBox.instance.outbound_selection);
-        outbounds.set_factory (factory);
-        close_request.connect (() => {
-            SingBox.instance.singbox.force_exit ();
+        outbounds.set_model(SingBox.instance.outbound_selection);
+        outbounds.set_factory(factory);
+
+        close_request.connect(() => {
+            SingBox.instance.singbox.force_exit();
             return false;
         });
     }

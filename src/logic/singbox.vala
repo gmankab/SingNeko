@@ -19,24 +19,20 @@
  */
 
 class Singularity.SingBox : Object {
+    public bool singbox_status { get; set; }
+    public signal void singbox_message (string message);
+
     public ListStore outbound_store = new ListStore (typeof (Outbound.Outbound));
     public Gtk.SingleSelection outbound_selection = null;
     public Subprocess? singbox = null;
-
+    bool can_use_singbox = true;
 
     construct {
         outbound_selection = new Gtk.SingleSelection (outbound_store);
-        outbound_selection.notify["selected"].connect (() => {
-            message ("Selected %s", ((Outbound.Outbound) outbound_selection.selected_item).name);
-            set_up ();
-        });
+        outbound_selection.notify["selected"].connect (() => set_up.begin ());
+        singbox_message.connect ((msg) => message ("%s", msg));
     }
-
-    private void set_up () {
-        if (singbox != null) {
-            message ("killing singbox");
-            singbox.force_exit ();
-        }
+    private void setup_config_dir () {
         var conf_dir = File.new_build_filename (Environment.get_user_config_dir (), "Singularity");
         try {
             conf_dir.make_directory ();
@@ -45,7 +41,10 @@ class Singularity.SingBox : Object {
         } catch (Error err) {
             warning ("Error during creating config dir: %s", err.message);
         }
-        var base_config = conf_dir.get_child ("BaseConfig.json");
+    }
+
+    private string get_base_config () {
+        var base_config = File.new_build_filename (Environment.get_user_config_dir (), "Singularity", "BaseConfig.json");
         if (!base_config.query_exists ()) {
             try {
                 message ("Saving base config");
@@ -54,7 +53,11 @@ class Singularity.SingBox : Object {
                 warning ("Error during saving base config: %s", err.message);
             }
         }
-        var outbound_config = conf_dir.get_child ("Outbound.json");
+        return base_config.get_path ();
+    }
+
+    private string get_outbound_config () {
+        var outbound_config = File.new_build_filename (Environment.get_user_config_dir (), "Singularity", "Outbound.json");
         try {
             message ("Saving outbound config");
             var generator = new Json.Generator ();
@@ -66,14 +69,58 @@ class Singularity.SingBox : Object {
         } catch (Error err) {
             warning ("Error during saving outbound config: %s", err.message);
         }
-        singbox = new Subprocess.newv ({ "sing-box", "--disable-color", "-c", base_config.get_path (), "-c", outbound_config.get_path (), "run" }, GLib.SubprocessFlags.STDERR_PIPE);
+        return outbound_config.get_path ();
+    }
+
+    private async void wait_for_singbox () {
+        while (!can_use_singbox) {
+            SourceFunc callback = wait_for_singbox.callback;
+            Idle.add ((owned) callback);
+            yield;
+        }
+    }
+
+    private async void set_up () {
+        if (singbox != null) {
+            singbox.force_exit ();
+            yield wait_for_singbox ();
+        }
+        singbox_message ("[Singularity] Starting outbound: %s".printf (((Outbound.Outbound) outbound_selection.selected_item).name));
+        setup_config_dir ();
+        var base_cfg = get_base_config ();
+        var outbound_cfg = get_outbound_config ();
+
+        try {
+            singbox = new Subprocess.newv ({ "sing-box", "--disable-color", "-c", base_cfg, "-c", outbound_cfg, "run" }, SubprocessFlags.STDERR_PIPE);
+        } catch (Error err) {
+            singbox_message ("[Singularity] Failed to launch singbox: %s".printf (err.message));
+        }
         meow_with_stream.begin (new DataInputStream (singbox.get_stderr_pipe ()));
     }
 
     async void meow_with_stream (DataInputStream input) {
-        for (string line = ""; line != null; line = yield input.read_line_async ())
-            message ("SingBox: %s", line);
-        message ("SingBox stream closed");
+        singbox_status = true;
+        can_use_singbox = false;
+        string line = "";
+        do {
+            try {
+                line = yield input.read_line_async ();
+            } catch (Error err) {
+                warning ("Error during read_line: %s", err.message);
+            }
+            if (line != null)
+                singbox_message (line);
+        } while (line != null);
+        singbox_message ("[Singularity]: Singbox log closed");
+        try {
+            yield singbox.wait_async ();
+
+            singbox_status = false;
+        } catch (Error err) {
+            warning ("Failed to wait for singbox %s", err.message);
+        }
+        singbox_message ("[Singularity]: Singbox exited with code %d\n".printf (singbox.get_status ()));
+        can_use_singbox = true;
     }
 
     private SingBox () {}
