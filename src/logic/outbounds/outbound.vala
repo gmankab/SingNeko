@@ -29,8 +29,6 @@ class Singularity.Outbound.Outbound : Object, Json.Serializable {
         uri = Uri.parse (profile, UriFlags.HAS_PASSWORD | UriFlags.NON_DNS | UriFlags.PARSE_RELAXED);
 
         var scheme = uri.get_scheme ();
-        if (!(scheme == "trojan" || scheme == "vless"))// Stupid check for now
-            throw new ParseError.NOT_IMPLEMENTED ("Protocol %s not implemented yet", scheme);
 
         var host = uri.get_host ();
         var port = uri.get_port ();
@@ -127,8 +125,20 @@ class Singularity.Outbound.Outbound : Object, Json.Serializable {
                 tls = tls,
             };
             break;
+        case "ss":
+            string creds = (string) Base64.decode (user);
+            var temp = creds.split (":", 2);
+            if (temp.length != 2)
+                throw new ParseError.WRONG_FORMATING ("Shadowsocks formating fail. Failed to parse creditants ?%s?", creds);
+            outbound = new ShadowSocks () {
+                method = temp[0],
+                password = temp[1],
+                server = host,
+                server_port = port,
+            };
+            break;
         default:
-            warning ("Unknown scheme %s", scheme);
+            throw new ParseError.NOT_IMPLEMENTED ("Protocol %s not implemented yet", scheme);
             break;
         }
         outbound.name = name;
