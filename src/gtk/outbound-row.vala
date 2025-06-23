@@ -27,7 +27,11 @@ class Singularity.Ui.OutboundRow : Gtk.Box {
     construct {
     }
     public void set_outbound(Outbound.Outbound outbound) {
-        schema.label = outbound.type_name;
+        schema.label = outbound.pretty_schema();
         descr.label = outbound.name;
+    }
+
+    public void add_to_sizegroup(Gtk.SizeGroup group) {
+        group.add_widget(schema);
     }
 }

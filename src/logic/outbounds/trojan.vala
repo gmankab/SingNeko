@@ -50,4 +50,8 @@ class Singularity.Outbound.Trojan : Dial, Json.Serializable {
         }
         return node;
     }
+
+    public override string pretty_schema () {
+        return "Trojan";
+    }
 }

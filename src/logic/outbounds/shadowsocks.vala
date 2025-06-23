@@ -40,4 +40,8 @@ class Singularity.Outbound.ShadowSocks : Dial, Json.Serializable {
     construct {
         type_name = "shadowsocks";
     }
+
+    public override string pretty_schema() {
+        return "SSocks";
+    }
 }

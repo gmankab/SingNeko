@@ -39,17 +39,14 @@ public class Singularity.Window : Adw.ApplicationWindow {
         }
     }
 
-    public Window(Gtk.Application app) {
-        Object(application: app);
-
-        SingBox.instance.notify["singbox-status"].connect(() => on_singbox_status_change());
-        SingBox.instance.singbox_message.connect((message) => singbox_log.text += "\n" + message);
-        on_singbox_status_change();
-
+    private void setup_outbound_list() {
+        var sg = new Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL); // Keep schema labels same size
         var factory = new Gtk.SignalListItemFactory();
         factory.setup.connect((obj) => {
             var item = (Gtk.ListItem) obj;
-            item.set_child(new Ui.OutboundRow());
+            var row = new Ui.OutboundRow();
+            row.add_to_sizegroup(sg);
+            item.set_child(row);
         });
         factory.bind.connect((obj) => {
             var item = (Gtk.ListItem) obj;
@@ -59,6 +56,16 @@ public class Singularity.Window : Adw.ApplicationWindow {
         });
         outbounds.set_model(SingBox.instance.outbound_selection);
         outbounds.set_factory(factory);
+    }
+
+    public Window(Gtk.Application app) {
+        Object(application: app);
+
+        SingBox.instance.notify["singbox-status"].connect(() => on_singbox_status_change());
+        SingBox.instance.singbox_message.connect((message) => singbox_log.text += "\n" + message);
+        on_singbox_status_change();
+
+        setup_outbound_list();
 
         close_request.connect(() => {
             SingBox.instance.singbox.force_exit();

@@ -24,6 +24,10 @@ class Singularity.Outbound.Outbound : Object, Json.Serializable {
     public string tag { get; set; default = "proxy"; }
     public string name; // Not a property
 
+    public virtual string pretty_schema () {
+        return "FIXME";
+    }
+
     public static Outbound parse_uri (string profile) throws UriError, ParseError {
         Uri uri = null;
         uri = Uri.parse (profile, UriFlags.HAS_PASSWORD | UriFlags.NON_DNS | UriFlags.PARSE_RELAXED);

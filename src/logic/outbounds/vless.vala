@@ -51,4 +51,8 @@ class Singularity.Outbound.Vless : Dial, Json.Serializable {
         }
         return node;
     }
+
+    public override string pretty_schema () {
+        return "Vless";
+    }
 }
