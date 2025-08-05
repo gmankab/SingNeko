@@ -1,5 +1,5 @@
-name: PostmarketOS Build
-run-name: PostmarketOS Build
+name: Alpine build
+run-name: Alpine build
 on:
   push:
   workflow_dispatch:
@@ -7,40 +7,33 @@ on:
 jobs:
   prepare:
     name: Prepare
-    runs-on: Pmbootstrap
-    outputs:
-      time: ${{ steps.time.outputs.time }}
-    steps:
-      - name: Set start Time
-        id: time
-        shell: sh
-        run: echo time=$(date +"%Y%m%d%H%M%S") >> $GITHUB_OUTPUT
-      - name: Update pmbootstrap
-        uses: actions/pmbootstrap-update@master
+    runs-on: docker
+    uses: actions/pmbootstrap-build/.forgejo/workflows/prepare.yaml@v1
 
   build:
-    name: Build for ${{ matrix.info.arch }}
-    runs-on: Pmbootstrap
+    name: Build for ${{ matrix.arch }}
+    runs-on: docker
+    needs: prepare
+    uses: actions/pmbootstrap-build/.forgejo/workflows/build.yaml@v1
     strategy:
       matrix:
-        info:
-          - arch: x86_64
-          - arch: aarch64
-    needs: prepare
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - name: Build packages
-        id: build
-        uses: actions/pmbootstrap-build@main
-        with:
-          name: singularity
-          aports: ${{github.workspace}}/package/alpine
-          arch: ${{ matrix.info.arch }}
-          src: ${{github.workspace}}
-          time: ${{ needs.prepare.outputs.time }}
-      - name: "Upload packages"
-        uses: actions/upload-alpine-package@main
-        with:
-          files: ${{steps.build.outputs.packages}}
-          secret: ${{secrets.PACKAGE_TOKEN}}
+        arch:
+          - x86_64
+          - x86
+          - aarch64
+          - armv7
+          - riscv64
+    with:
+      name: singularity
+      aports: package/alpine
+      arch: ${{ matrix.arch }}
+      src: .
+      time: ${{ needs.prepare.outputs.time }}
+      submodules: recursive
+
+  upload:
+    name: Upload
+    needs: build
+    runs-on: docker
+    uses: actions/upload-alpine-package/.forgejo/workflows/upload-artifacts.yaml@main
+    secrets: inherit
