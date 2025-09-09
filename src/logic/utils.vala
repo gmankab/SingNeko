@@ -21,7 +21,7 @@
 /*
  * Collection of ugly workarounds and hacks
  */
-namespace Singularity.Utils {
+namespace SingNeko.Utils {
     /*
      * Vala use `meow-meow-meow` as in json serialization, but we need to use
      * `meow_meow_meow` to make our saves compatible with SingBox configuration.

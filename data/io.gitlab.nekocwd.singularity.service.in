@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=io.gitlab.nekocwd.singularity
-Exec=@bindir@/singularity --gapplication-service

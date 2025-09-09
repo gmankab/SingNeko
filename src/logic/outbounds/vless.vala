@@ -22,7 +22,7 @@
  * Vless outbound.
  * DASH and TYPE FIX REQUIRED
  */
-class Singularity.Outbound.Vless : Dial, Json.Serializable {
+class SingNeko.Outbound.Vless : Dial, Json.Serializable {
     public string server { get; set; default = null; }
     public int64 server_port { get; set; default = 1080; }
     public string uuid { get; set; default = null; }

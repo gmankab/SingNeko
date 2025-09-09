@@ -22,7 +22,7 @@
  * Quic transport.
  * TYPE FIX REQUIRED
  */
-class Singularity.Transport.Quic : Transport, Json.Serializable {
+class SingNeko.Transport.Quic : Transport, Json.Serializable {
     construct {
         type_name = "quic";
     }

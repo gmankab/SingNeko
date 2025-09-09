@@ -22,7 +22,7 @@
  * WebSocket transport.
  * DASH and TYPE FIX REQUIRED
  */
-class Singularity.Transport.WebSocket : Transport, Json.Serializable {
+class SingNeko.Transport.WebSocket : Transport, Json.Serializable {
     public string path { get; set; default = null; }
     public Gee.HashMap<string, string> headers { get; set; default = new Gee.HashMap<string, string> (); }
     public int64 max_early_data { get; set; default = 0; }

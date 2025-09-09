@@ -18,12 +18,12 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-public class Singularity.Application : Adw.Application {
+public class SingNeko.Application : Adw.Application {
     public Application () {
         Object (
-                application_id: "io.gitlab.nekocwd.singularity",
+                application_id: "io.gitlab.nekocwd.singneko",
                 flags: ApplicationFlags.DEFAULT_FLAGS,
-                resource_base_path: "/io/gitlab/nekocwd/singularity"
+                resource_base_path: "/io/gitlab/nekocwd/singneko"
         );
     }
 
@@ -42,10 +42,10 @@ public class Singularity.Application : Adw.Application {
 
     public override void activate () {
         base.activate ();
-        var win = this.active_window ?? new Singularity.Window (this);
+        var win = this.active_window ?? new SingNeko.Window (this);
         win.present ();
         var styling = new Gtk.CssProvider ();
-        styling.load_from_resource ("/io/gitlab/nekocwd/singularity/gtk/style.css");
+        styling.load_from_resource ("/io/gitlab/nekocwd/singneko/gtk/style.css");
         Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (),
                                                    styling,
                                                    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -54,8 +54,8 @@ public class Singularity.Application : Adw.Application {
     private void on_about_action () {
         string[] developers = { "Vasiliy Doylov (NekoCWD) <nekocwd@mainlining.org>" };
         var about = new Adw.AboutDialog () {
-            application_name = "Singularity",
-            application_icon = "io.gitlab.nekocwd.singularity",
+            application_name = "SingNeko",
+            application_icon = "io.gitlab.nekocwd.singneko",
             developer_name = "NekoCWD",
             translator_credits = _("translator-credits"),
             version = Config.PACKAGE_VERSION,

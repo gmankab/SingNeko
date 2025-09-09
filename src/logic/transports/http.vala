@@ -22,7 +22,7 @@
  * HTTP transport.
  * DASH and TYPE FIX REQUIRED
  */
-class Singularity.Transport.Http : Transport, Json.Serializable {
+class SingNeko.Transport.Http : Transport, Json.Serializable {
     public string[] host { get; set; default = new string[0]; }
     public string path { get; set; default = null; }
     public string method { get; set; default = null; }

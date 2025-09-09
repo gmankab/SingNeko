@@ -1,4 +1,4 @@
-application_id = 'io.gitlab.nekocwd.singularity'
+application_id = 'io.gitlab.nekocwd.singneko'
 
 scalable_dir = 'hicolor' / 'scalable' / 'apps'
 install_data(

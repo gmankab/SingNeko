@@ -18,8 +18,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-[GtkTemplate(ui = "/io/gitlab/nekocwd/singularity/gtk/window.ui")]
-public class Singularity.Window : Adw.ApplicationWindow {
+[GtkTemplate(ui = "/io/gitlab/nekocwd/singneko/gtk/window.ui")]
+public class SingNeko.Window : Adw.ApplicationWindow {
     [GtkChild]
     private unowned Adw.BottomSheet sheet;
     [GtkChild]

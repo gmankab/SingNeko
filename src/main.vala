@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-namespace Singularity {
+namespace SingNeko {
     int main (string[] args) {
         Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
         Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
@@ -30,7 +30,7 @@ namespace Singularity {
             if (sub_path != null) {
                 file = File.new_for_path (sub_path);
             } else {
-                file = File.new_build_filename (Environment.get_user_config_dir (), "Singularity", "subscription");
+                file = File.new_build_filename (Environment.get_user_config_dir (), "SingNeko", "subscription");
             }
             file.load_contents (null, out content, null);
         } catch (Error err) {
@@ -46,7 +46,7 @@ namespace Singularity {
                 warning ("Error during subscription parse: %s", err.message);
             }
         }
-        var app = new Singularity.Application ();
+        var app = new SingNeko.Application ();
         return app.run (args);
     }
 }

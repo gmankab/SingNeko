@@ -1,6 +1,6 @@
 desktop_file = i18n.merge_file(
-        input: 'io.gitlab.nekocwd.singularity.desktop.in',
-       output: 'io.gitlab.nekocwd.singularity.desktop',
+        input: 'io.gitlab.nekocwd.singneko.desktop.in',
+       output: 'io.gitlab.nekocwd.singneko.desktop',
          type: 'desktop',
        po_dir: '../po',
       install: true,
@@ -13,8 +13,8 @@ if desktop_utils.found()
 endif
 
 appstream_file = i18n.merge_file(
-        input: 'io.gitlab.nekocwd.singularity.metainfo.xml.in',
-       output: 'io.gitlab.nekocwd.singularity.metainfo.xml',
+        input: 'io.gitlab.nekocwd.singneko.metainfo.xml.in',
+       output: 'io.gitlab.nekocwd.singneko.metainfo.xml',
        po_dir: '../po',
       install: true,
   install_dir: get_option('datadir') / 'metainfo'
@@ -24,7 +24,7 @@ appstreamcli = find_program('appstreamcli', required: false, disabler: true)
 test('Validate appstream file', appstreamcli,
      args: ['validate', '--no-net', '--explain', appstream_file])
 
-install_data('io.gitlab.nekocwd.singularity.gschema.xml',
+install_data('io.gitlab.nekocwd.singneko.gschema.xml',
   install_dir: get_option('datadir') / 'glib-2.0' / 'schemas'
 )
 
@@ -37,8 +37,8 @@ test('Validate schema file',
 service_conf = configuration_data()
 service_conf.set('bindir', get_option('prefix') / get_option('bindir'))
 configure_file(
-  input: 'io.gitlab.nekocwd.singularity.service.in',
-  output: 'io.gitlab.nekocwd.singularity.service',
+  input: 'io.gitlab.nekocwd.singneko.service.in',
+  output: 'io.gitlab.nekocwd.singneko.service',
   configuration: service_conf,
   install_dir: get_option('datadir') / 'dbus-1' / 'services'
 )

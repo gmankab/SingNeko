@@ -1,11 +1,11 @@
-singularity_sources = [
+singneko_sources = [
   'main.vala',
   'application.vala',
   'gtk/window.vala',
   'gtk/outbound-row.vala',
 ]
 
-singularity_deps = [
+singneko_deps = [
   config_dep,
   dependency('gtk4'),
   dependency('libadwaita-1', version: '>= 1.4'),
@@ -30,17 +30,17 @@ blueprints = custom_target(
   ],
 )
 
-singularity_sources += gnome.compile_resources(
-  'singularity-resources',
-  'singularity.gresource.xml',
-  c_name: 'singularity',
+singneko_sources += gnome.compile_resources(
+  'singneko-resources',
+  'singneko.gresource.xml',
+  c_name: 'singneko',
   dependencies: blueprints,
 )
 
 executable(
-  'singularity',
-  singularity_sources,
-  dependencies: singularity_deps,
+  'singneko',
+  singneko_sources,
+  dependencies: singneko_deps,
   include_directories: config_inc,
   install: true,
 )

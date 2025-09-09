@@ -1,6 +1,6 @@
-# Singularity
+# SingNeko
 
 SingBox wrapper.
 
 ## ENV variables:
- - `SUB_FILE` = `.config/Singularity/subscription` - path to subscription file
+ - `SUB_FILE` = `.config/SingNeko/subscription` - path to subscription file

@@ -1,8 +1,8 @@
-pkgname=singularity
+pkgname=singneko
 pkgver=0.1.0
 pkgrel=0
 pkgdesc="SingBox wrapper"
-url="https://git.nekocwd.duckdns.org/NekoCWD/singularity"
+url="https://git.nekocwd.duckdns.org/NekoCWD/singneko"
 arch="all"
 license="GPL-3.0-only"
 makedepends="

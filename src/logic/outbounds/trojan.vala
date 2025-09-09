@@ -22,7 +22,7 @@
  * Trojan outbound.
  * DASH and TYPE FIX REQUIRED
  */
-class Singularity.Outbound.Trojan : Dial, Json.Serializable {
+class SingNeko.Outbound.Trojan : Dial, Json.Serializable {
     public string server { get; set; default = null; }
     public int64 server_port { get; set; default = 1080; }
     public string password { get; set; default = null; }

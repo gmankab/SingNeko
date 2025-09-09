@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-class Singularity.SingBox : Object {
+class SingNeko.SingBox : Object {
     public bool singbox_status { get; set; }
     public signal void singbox_message (string message);
 
@@ -33,7 +33,7 @@ class Singularity.SingBox : Object {
         singbox_message.connect ((msg) => message ("%s", msg));
     }
     private void setup_config_dir () {
-        var conf_dir = File.new_build_filename (Environment.get_user_config_dir (), "Singularity");
+        var conf_dir = File.new_build_filename (Environment.get_user_config_dir (), "SingNeko");
         try {
             conf_dir.make_directory ();
         } catch (IOError.EXISTS err) {
@@ -44,11 +44,11 @@ class Singularity.SingBox : Object {
     }
 
     private string get_base_config () {
-        var base_config = File.new_build_filename (Environment.get_user_config_dir (), "Singularity", "BaseConfig.json");
+        var base_config = File.new_build_filename (Environment.get_user_config_dir (), "SingNeko", "BaseConfig.json");
         if (!base_config.query_exists ()) {
             try {
                 message ("Saving base config");
-                base_config.replace_contents (resources_lookup_data ("/io/gitlab/nekocwd/singularity/base.json", ResourceLookupFlags.NONE).get_data (), null, false, FileCreateFlags.NONE, null);
+                base_config.replace_contents (resources_lookup_data ("/io/gitlab/nekocwd/singneko/base.json", ResourceLookupFlags.NONE).get_data (), null, false, FileCreateFlags.NONE, null);
             } catch (Error err) {
                 warning ("Error during saving base config: %s", err.message);
             }
@@ -57,7 +57,7 @@ class Singularity.SingBox : Object {
     }
 
     private string get_outbound_config () {
-        var outbound_config = File.new_build_filename (Environment.get_user_config_dir (), "Singularity", "Outbound.json");
+        var outbound_config = File.new_build_filename (Environment.get_user_config_dir (), "SingNeko", "Outbound.json");
         try {
             message ("Saving outbound config");
             var generator = new Json.Generator ();
@@ -85,7 +85,7 @@ class Singularity.SingBox : Object {
             singbox.force_exit ();
             yield wait_for_singbox ();
         }
-        singbox_message ("[Singularity] Starting outbound: %s".printf (((Outbound.Outbound) outbound_selection.selected_item).name));
+        singbox_message ("[SingNeko] Starting outbound: %s".printf (((Outbound.Outbound) outbound_selection.selected_item).name));
         setup_config_dir ();
         var base_cfg = get_base_config ();
         var outbound_cfg = get_outbound_config ();
@@ -93,7 +93,7 @@ class Singularity.SingBox : Object {
         try {
             singbox = new Subprocess.newv ({ "sing-box", "--disable-color", "-c", base_cfg, "-c", outbound_cfg, "run" }, SubprocessFlags.STDERR_PIPE);
         } catch (Error err) {
-            singbox_message ("[Singularity] Failed to launch singbox: %s".printf (err.message));
+            singbox_message ("[SingNeko] Failed to launch singbox: %s".printf (err.message));
         }
         meow_with_stream.begin (new DataInputStream (singbox.get_stderr_pipe ()));
     }
@@ -111,7 +111,7 @@ class Singularity.SingBox : Object {
             if (line != null)
                 singbox_message (line);
         } while (line != null);
-        singbox_message ("[Singularity]: Singbox log closed");
+        singbox_message ("[SingNeko]: Singbox log closed");
         try {
             yield singbox.wait_async ();
 
@@ -119,7 +119,7 @@ class Singularity.SingBox : Object {
         } catch (Error err) {
             warning ("Failed to wait for singbox %s", err.message);
         }
-        singbox_message ("[Singularity]: Singbox exited with code %d\n".printf (singbox.get_status ()));
+        singbox_message ("[SingNeko]: Singbox exited with code %d\n".printf (singbox.get_status ()));
         can_use_singbox = true;
     }
 

@@ -1,1 +1,1 @@
-i18n.gettext('singularity', preset: 'glib')
+i18n.gettext('singneko', preset: 'glib')

@@ -17,7 +17,7 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
-class Singularity.TLS : Object, Json.Serializable {
+class SingNeko.TLS : Object, Json.Serializable {
     public class Reality : Object, Json.Serializable {
         public bool enabled { get; set; default = false; }
         public string public_key { get; set; default = null; }

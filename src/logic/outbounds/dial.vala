@@ -22,7 +22,7 @@
  * Base for outbound with Dial fields.
  * DASH and TYPE FIX REQUIRED
  */
-class Singularity.Outbound.Dial : Outbound {
+class SingNeko.Outbound.Dial : Outbound {
     public string detour { get; set; default = null; }
     public string bind_interface { get; set; default = null; }
     public string inet4_bind_address { get; set; default = null; }

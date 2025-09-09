@@ -22,7 +22,7 @@
  * gRPC transport.
  * DASH and TYPE FIX REQUIRED
  */
-class Singularity.Transport.GRPC : Transport, Json.Serializable {
+class SingNeko.Transport.GRPC : Transport, Json.Serializable {
     public string service_name { get; set; default = null; }
     public string idle_timeout { get; set; default = null; }
     public string ping_timeout { get; set; default = null; }

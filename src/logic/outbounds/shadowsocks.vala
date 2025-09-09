@@ -22,7 +22,7 @@
  * ShadowSocks outbound.
  * DASH and TYPE FIX REQUIRED
  */
-class Singularity.Outbound.ShadowSocks : Dial, Json.Serializable {
+class SingNeko.Outbound.ShadowSocks : Dial, Json.Serializable {
     public string server { get; set; default = null; }
     public int64 server_port { get; set; default = 1080; }
     public string method { get; set; default = null; }

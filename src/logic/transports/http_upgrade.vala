@@ -22,7 +22,7 @@
  * HTTPUpgrade transport.
  * TYPE FIX REQUIRED
  */
-class Singularity.Transport.HttpUpgrade : Transport, Json.Serializable {
+class SingNeko.Transport.HttpUpgrade : Transport, Json.Serializable {
     public string host { get; set; default = null; }
     public string path { get; set; default = null; }
     public Gee.HashMap<string, string> headers { get; set; default = new Gee.HashMap<string, string> (); }

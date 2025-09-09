@@ -1,14 +1,14 @@
 utils_sources = 'logic/utils.vala'
 config_sources = 'logic/config.vala'
 
-singularity_deps += [
+singneko_deps += [
   dependency('json-glib-1.0'),
   dependency('gee-0.8'),
 ]
 
 subdir('transports')
 subdir('outbounds')
-singularity_sources += [
+singneko_sources += [
   utils_sources,
   outbounds_sources,
   transports_sources,

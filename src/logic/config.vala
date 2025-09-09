@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-class Singularity.SingConfig : Object, Json.Serializable {
+class SingNeko.SingConfig : Object, Json.Serializable {
     public List<Outbound.Outbound> outbounds { get; owned set; default = new List<Outbound.Outbound> (); }
     public override Json.Node serialize_property (string property_name, GLib.Value value, GLib.ParamSpec pspec) {
         if (property_name == "outbounds") {
