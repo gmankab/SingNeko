@@ -19,6 +19,8 @@
  */
 
 public class SingNeko.Application : Adw.Application {
+    private bool style_initialised = false;
+
     public Application () {
         Object (
                 application_id: "io.gitlab.nekocwd.singneko",
@@ -42,13 +44,17 @@ public class SingNeko.Application : Adw.Application {
 
     public override void activate () {
         base.activate ();
+        if (!style_initialised) {
+            var styling = new Gtk.CssProvider ();
+            styling.load_from_resource ("/io/gitlab/nekocwd/singneko/gtk/style.css");
+            Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (),
+                                                       styling,
+                                                       Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            style_initialised = true;
+        }
+
         var win = this.active_window ?? new SingNeko.Window (this);
         win.present ();
-        var styling = new Gtk.CssProvider ();
-        styling.load_from_resource ("/io/gitlab/nekocwd/singneko/gtk/style.css");
-        Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (),
-                                                   styling,
-                                                   Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
 
     private void on_about_action () {
