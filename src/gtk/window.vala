@@ -66,10 +66,5 @@ public class Singularity.Window : Adw.ApplicationWindow {
         on_singbox_status_change();
 
         setup_outbound_list();
-
-        close_request.connect(() => {
-            SingBox.instance.singbox.force_exit();
-            return false;
-        });
     }
 }
