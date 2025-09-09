@@ -7,26 +7,26 @@ template $SingNekoWindow: Adw.ApplicationWindow {
   default-height: 600;
   hide-on-close: true;
 
-  content: Adw.ToolbarView {
-    [top]
-    Adw.HeaderBar {
-      styles [
-        "flat",
-      ]
+  content: Adw.BottomSheet sheet {
+    styles [
+      "singbox-status",
+    ]
 
-      [end]
-      MenuButton {
-        primary: true;
-        icon-name: "open-menu-symbolic";
-        tooltip-text: _("Main Menu");
-        menu-model: primary_menu;
+    Adw.ToolbarView {
+      [top]
+      Adw.HeaderBar {
+        styles [
+          "flat",
+        ]
+
+        [end]
+        MenuButton {
+          primary: true;
+          icon-name: "open-menu-symbolic";
+          tooltip-text: _("Main Menu");
+          menu-model: primary_menu;
+        }
       }
-    }
-
-    content: Adw.BottomSheet sheet {
-      styles [
-        "singbox-status",
-      ]
 
       content: Adw.Clamp {
         ScrolledWindow {
@@ -44,24 +44,24 @@ template $SingNekoWindow: Adw.ApplicationWindow {
           }
         }
       };
+    }
 
-      bottom-bar: Label singbox_status {};
+    bottom-bar: Label singbox_status {};
 
-      sheet: ScrolledWindow {
-        propagate-natural-height: true;
+    sheet: ScrolledWindow {
+      propagate-natural-height: true;
 
-        TextView {
-          styles [
-            "singbox-log",
-          ]
+      TextView {
+        styles [
+          "singbox-log",
+        ]
 
-          editable: false;
-          cursor-visible: false;
-          monospace: true;
+        editable: false;
+        cursor-visible: false;
+        monospace: true;
 
-          buffer: TextBuffer singbox_log {};
-        }
-      };
+        buffer: TextBuffer singbox_log {};
+      }
     };
   };
 }
