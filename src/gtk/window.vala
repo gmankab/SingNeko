@@ -62,7 +62,12 @@ public class SingNeko.Window : Adw.ApplicationWindow {
         Object(application: app);
 
         SingBox.instance.notify["singbox-status"].connect(() => on_singbox_status_change());
-        SingBox.instance.singbox_message.connect((message) => singbox_log.text += "\n" + message);
+        SingBox.instance.singbox_message.connect((message) => {
+            Gtk.TextIter iter;
+            var msg = "\n" + message;
+            singbox_log.get_end_iter(out iter);
+            singbox_log.insert_text(ref iter, msg, msg.length);
+        });
         on_singbox_status_change();
 
         setup_outbound_list();
