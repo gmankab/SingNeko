@@ -33,9 +33,11 @@ public class SingNeko.Window : Adw.ApplicationWindow {
         var status = SingBox.instance.singbox_status;
         singbox_status.label = "%s %s".printf(_("SingBox"), status ? _("running") : _("stopped"));
         if (status) {
-            sheet.remove_css_class("singbox-fail");
+            singbox_status.add_css_class("success");
+            singbox_status.remove_css_class("error");
         } else {
-            sheet.add_css_class("singbox-fail");
+            singbox_status.add_css_class("error");
+            singbox_status.remove_css_class("success");
         }
     }
 

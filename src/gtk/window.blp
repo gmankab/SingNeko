@@ -7,48 +7,146 @@ template $SingNekoWindow: Adw.ApplicationWindow {
   default-height: 600;
   hide-on-close: true;
 
-  content: Adw.BottomSheet sheet {
-    styles [
-      "singbox-status",
-    ]
+  Adw.Breakpoint {
+    condition ("max-width: 500sp")
 
-    Adw.ToolbarView {
-      [top]
-      Adw.HeaderBar {
-        styles [
-          "flat",
-        ]
+    setters {
+      layout.layout-name: "bottom-sheet";
+    }
+  }
 
-        [end]
-        MenuButton {
-          primary: true;
-          icon-name: "open-menu-symbolic";
-          tooltip-text: _("Main Menu");
-          menu-model: primary_menu;
-        }
-      }
+  content: Adw.MultiLayoutView layout {
+    Adw.Layout {
+      name: "sidebar";
 
-      content: Adw.Clamp {
-        ScrolledWindow {
-          hscrollbar-policy: never;
+      content: Adw.OverlaySplitView sidebar {
+        sidebar-position: end;
+        sidebar-width-fraction: 0.6;
+        max-sidebar-width: 1200;
 
-          ListView outbounds {
-            margin-end: 12;
-            margin-start: 12;
-            halign: fill;
-            valign: start;
+        sidebar: Adw.ToolbarView {
+          [top]
+          Adw.HeaderBar {
+            title-widget: Label {
+              label: _("Logs");
 
-            styles [
-              "outbound-list",
-            ]
+              styles [
+                "heading",
+              ]
+            };
           }
+
+          content: Adw.LayoutSlot {
+            id: "log";
+          };
+        };
+
+        Adw.ToolbarView {
+          [top]
+          Adw.HeaderBar {
+            title-widget: Box {
+              orientation: vertical;
+
+              Label {
+                label: _("Outbounds");
+
+                styles [
+                  "heading",
+                ]
+              }
+
+              Adw.LayoutSlot {
+                id: "status";
+              }
+            };
+
+            MenuButton {
+              primary: true;
+              icon-name: "open-menu-symbolic";
+              tooltip-text: _("Main Menu");
+              menu-model: primary_menu;
+            }
+
+            [end]
+            ToggleButton {
+              icon-name: "sidebar-show-right-symbolic";
+              active: bind sidebar.collapsed inverted bidirectional;
+            }
+          }
+
+          content: Adw.LayoutSlot {
+            id: "list";
+          };
         }
       };
     }
 
-    bottom-bar: Label singbox_status {};
+    Adw.Layout {
+      name: "bottom-sheet";
 
-    sheet: ScrolledWindow {
+      content: Adw.BottomSheet sheet {
+        open: true;
+        show-drag-handle: true;
+
+        bottom-bar: Adw.LayoutSlot {
+          id: "status";
+        };
+
+        sheet: Adw.LayoutSlot {
+          margin-top: 24;
+          id: "log";
+        };
+
+        content: Adw.ToolbarView {
+          [top]
+          Adw.HeaderBar {
+            title-widget: Label {
+              label: _("Outbounds");
+
+              styles [
+                "heading",
+              ]
+            };
+
+            MenuButton {
+              primary: true;
+              icon-name: "open-menu-symbolic";
+              tooltip-text: _("Main Menu");
+              menu-model: primary_menu;
+            }
+          }
+
+          content: Adw.LayoutSlot {
+            id: "list";
+          };
+        };
+
+        styles [
+          "singbox-status",
+        ]
+      };
+    }
+
+    [list]
+    Adw.Clamp {
+      ListView outbounds {
+        margin-end: 12;
+        margin-start: 12;
+        halign: fill;
+        valign: start;
+
+        styles [
+          "outbound-list",
+        ]
+      }
+    }
+
+    [status]
+    Label singbox_status {}
+
+    [log]
+    ScrolledWindow log_sheet {
+      propagate-natural-width: true;
       propagate-natural-height: true;
 
       TextView {
@@ -62,7 +160,7 @@ template $SingNekoWindow: Adw.ApplicationWindow {
 
         buffer: TextBuffer singbox_log {};
       }
-    };
+    }
   };
 }
 

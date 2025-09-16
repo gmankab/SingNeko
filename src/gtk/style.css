@@ -2,37 +2,35 @@
     border-radius: 5px;
     padding: 10px;
 }
+
 .outbound-list {
     background: none;
 }
-.outbound-list > row {
+
+.outbound-list>row {
     border-radius: 10px;
 }
-.outbound-list > row:selected {
+
+.outbound-list>row:selected {
     background-color: alpha(var(--view-fg-color), 0.2);
 }
-.outbound-row > .schema {
+
+.outbound-row>.schema {
     background-color: alpha(var(--view-fg-color), 0.2);
     border-radius: 5px;
     padding: 5px;
     font-size: 13pt;
 }
-.singbox-status > sheet > stack > button,
-.singbox-status > sheet > stack > widget {
-    background-color: alpha(var(--success-bg-color), 0.1);
-}
-.singbox-status.singbox-fail > sheet > stack > button,
-.singbox-status.singbox-fail > sheet > stack > widget {
-    background-color: alpha(var(--error-bg-color), 0.1);
-}
-.singbox-status > sheet > stack > button {
-    border-radius: 10px 10px 0px 0px;
+
+.singbox-status>sheet>stack>button {
     padding: 5px;
 }
+
 .singbox-log {
     background: none;
 }
-.singbox-status > sheet > stack > widget > scrolledwindow {
+
+.singbox-status>sheet>stack>widget>scrolledwindow {
     padding: 12px;
     padding-top: 32px;
 }
