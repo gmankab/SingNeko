@@ -24,7 +24,7 @@ jobs:
           - armv7
           - riscv64
     with:
-      name: singularity
+      name: singneko
       aports: package/alpine
       arch: ${{ matrix.arch }}
       src: .
