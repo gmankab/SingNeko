@@ -129,15 +129,17 @@ template $SingNekoWindow: Adw.ApplicationWindow {
 
     [list]
     Adw.Clamp {
-      ListView outbounds {
-        margin-end: 12;
-        margin-start: 12;
-        halign: fill;
-        valign: start;
+      ScrolledWindow {
+        ListView outbounds {
+          margin-end: 12;
+          margin-start: 12;
+          halign: fill;
+          valign: start;
 
-        styles [
-          "outbound-list",
-        ]
+          styles [
+            "outbound-list",
+          ]
+        }
       }
     }
 
@@ -147,7 +149,6 @@ template $SingNekoWindow: Adw.ApplicationWindow {
     [log]
     ScrolledWindow log_sheet {
       propagate-natural-width: true;
-      propagate-natural-height: true;
 
       TextView {
         styles [
