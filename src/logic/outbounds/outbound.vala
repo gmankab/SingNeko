@@ -143,7 +143,6 @@ class SingNeko.Outbound.Outbound : Object, Json.Serializable {
             break;
         default:
             throw new ParseError.NOT_IMPLEMENTED ("Protocol %s not implemented yet", scheme);
-            break;
         }
         outbound.name = name;
         return outbound;
