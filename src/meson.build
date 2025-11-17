@@ -37,6 +37,8 @@ singneko_sources += gnome.compile_resources(
   dependencies: blueprints,
 )
 
+subdir('icons')
+
 executable(
   'singneko',
   singneko_sources,
