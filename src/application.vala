@@ -31,6 +31,10 @@ public class SingNeko.Application : Adw.Application {
 
     construct {
         ActionEntry[] action_entries = {
+            { "restart-singbox", () => {
+                  SingBox.instance.singbox.force_exit ();
+                  SingBox.instance.set_up.begin ();
+              } },
             { "about", this.on_about_action },
             { "preferences", this.on_preferences_action },
             { "quit", () => {
@@ -39,6 +43,7 @@ public class SingNeko.Application : Adw.Application {
               } }
         };
         this.add_action_entries (action_entries, this);
+        this.set_accels_for_action ("app.restart-singbox", { "<primary>r" });
         this.set_accels_for_action ("app.quit", { "<primary>q" });
     }
 

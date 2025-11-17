@@ -80,7 +80,7 @@ class SingNeko.SingBox : Object {
         }
     }
 
-    private async void set_up () {
+    public async void set_up () {
         if (singbox != null) {
             singbox.force_exit ();
             yield wait_for_singbox ();

@@ -168,6 +168,11 @@ template $SingNekoWindow: Adw.ApplicationWindow {
 menu primary_menu {
   section {
     item {
+      label: _("_Restart singbox");
+      action: "app.restart-singbox";
+    }
+
+    item {
       label: _("_Preferences");
       action: "app.preferences";
     }
