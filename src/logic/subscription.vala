@@ -27,7 +27,7 @@ namespace SingNeko.Subscription {
         old_active = (string) Base64.decode (old_active);
         uint16 i = 0, active = 0;
         foreach (var line in lines) {
-            if (line[0] == '#' && line != "")
+            if (line[0] == '#' || line.strip () == "")
                 continue;
             try {
                 SingBox.instance.outbound_store.append (Outbound.Outbound.parse_uri (line));
