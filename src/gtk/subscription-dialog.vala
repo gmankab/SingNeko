@@ -28,6 +28,13 @@ public class SingNeko.SubscriptionDialg : Adw.PreferencesDialog {
 
     construct {
         reload ();
+
+        Settings.get ().bind (Settings.KEY_SUBSCRIPTION_URL, this,
+                              "url", SettingsBindFlags.DEFAULT);
+        Settings.get ().bind (Settings.KEY_SUBSCRIPTION_IS_BASE64, this,
+                              "base64-encoded", SettingsBindFlags.DEFAULT);
+        Settings.get ().bind (Settings.KEY_SUBSCRIPTION_PULL_ON_STARTUP, this,
+                              "startup-pull", SettingsBindFlags.DEFAULT);
     }
 
     [GtkCallback ()]

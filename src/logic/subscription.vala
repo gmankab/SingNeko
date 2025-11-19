@@ -22,15 +22,39 @@ namespace SingNeko.Subscription {
     public void load () {
         SingBox.instance.outbound_store.remove_all ();
         var lines = get_content ().split ("\n", -1);
+        // Base64 encoded
+        var old_active = Settings.get ().get_string (Settings.KEY_ACTIVE_OUTBOUND);
+        old_active = (string) Base64.decode (old_active);
+        uint16 i = 0, active = 0;
         foreach (var line in lines) {
             if (line[0] == '#' && line != "")
                 continue;
             try {
                 SingBox.instance.outbound_store.append (Outbound.Outbound.parse_uri (line));
+                i += 1;
+                if (line == old_active)
+                    active = i;
             } catch (Error err) {
                 warning ("Error during subscription parse: %s", err.message);
             }
         }
+        if (active != 0)
+            SingBox.instance.outbound_selection.set_selected (active - 1);
+        else
+            warning ("Failed to find old active");
+    }
+
+    public async void init () {
+        if (!Settings.get ().get_boolean (Settings.KEY_SUBSCRIPTION_PULL_ON_STARTUP)) {
+            load ();
+            return;
+        }
+        var new_content = yield download_subscription (Settings.get ().get_string (Settings.KEY_SUBSCRIPTION_URL),
+            Settings.get ().get_boolean (Settings.KEY_SUBSCRIPTION_IS_BASE64));
+
+        message ("Subscription pulled");
+        replace_content (new_content);
+        load ();
     }
 
     public string get_content () {

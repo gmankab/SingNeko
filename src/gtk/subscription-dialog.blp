@@ -22,8 +22,7 @@ template $SingNekoSubscriptionDialg: Adw.PreferencesDialog {
       }
 
       Adw.SwitchRow {
-        // TODO: implement pull on startup
-        visible: false;
+        visible: true;
         title: _("Pull on startup");
         active: bind template.startup-pull bidirectional;
       }

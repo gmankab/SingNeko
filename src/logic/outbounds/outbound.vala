@@ -23,6 +23,7 @@ class SingNeko.Outbound.Outbound : Object, Json.Serializable {
     public string type_name { get; construct set; default = ""; }
     public string tag { get; set; default = "proxy"; }
     public string name; // Not a property
+    public string hash; // Not a property
 
     public virtual string pretty_schema () {
         return "FIXME";
@@ -145,6 +146,7 @@ class SingNeko.Outbound.Outbound : Object, Json.Serializable {
             throw new ParseError.NOT_IMPLEMENTED ("Protocol %s not implemented yet", scheme);
         }
         outbound.name = name;
+        outbound.hash = Base64.encode (profile.data);
         return outbound;
     }
 }

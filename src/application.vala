@@ -46,7 +46,7 @@ public class SingNeko.Application : Adw.Application {
         this.add_action_entries (action_entries, this);
         this.set_accels_for_action ("app.restart-singbox", { "<primary>r" });
         this.set_accels_for_action ("app.quit", { "<primary>q" });
-        Subscription.load ();
+        Subscription.init.begin ();
     }
 
     public override void activate () {

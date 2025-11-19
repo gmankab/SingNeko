@@ -101,6 +101,8 @@ class SingNeko.SingBox : Object {
             singbox_message ("[SingNeko] Failed to launch singbox: %s".printf (err.message));
         }
         meow_with_stream.begin (new DataInputStream (singbox.get_stderr_pipe ()));
+        Settings.get ().set_string (Settings.KEY_ACTIVE_OUTBOUND,
+                                    ((Outbound.Outbound) outbound_selection.selected_item).hash);
     }
 
     async void meow_with_stream (DataInputStream input) {
