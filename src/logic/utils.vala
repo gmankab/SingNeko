@@ -29,8 +29,10 @@ namespace SingNeko.Utils {
         var file = File.new_build_filename(Environment.get_user_config_dir(), "SingNeko");
         try {
             file.make_directory_with_parents();
+        } catch (IOError.EXISTS err) {
+            // It's ok
         } catch (Error err) {
-            warning("Failed to create %s", file.get_path());
+            warning("Failed to create %s: %s", file.get_path(), err.message);
         }
     }
 
