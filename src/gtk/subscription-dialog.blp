@@ -1,0 +1,158 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $SingNekoSubscriptionDialg: Adw.PreferencesDialog {
+  title: _("Subscription");
+  follows-content-size: true;
+
+  Adw.PreferencesPage {
+    title: _("Main subscription");
+
+    Adw.PreferencesGroup {
+      title: _("Download");
+
+      Adw.EntryRow {
+        title: _("Subscription URL");
+        text: bind template.url bidirectional;
+      }
+
+      Adw.SwitchRow {
+        title: _("Base64 Encoded");
+        active: bind template.base64-encoded bidirectional;
+      }
+
+      Adw.SwitchRow {
+        // TODO: implement pull on startup
+        visible: false;
+        title: _("Pull on startup");
+        active: bind template.startup-pull bidirectional;
+      }
+
+      Adw.ActionRow {
+        title: _("Old subscription");
+
+        [suffix]
+        Adw.ToggleGroup {
+          valign: center;
+          halign: start;
+          active-name: bind template.content-policy bidirectional;
+
+          Adw.Toggle {
+            name: "delete";
+            label: _("Delete");
+          }
+
+          Adw.Toggle {
+            name: "keep";
+            label: _("Keep");
+          }
+        }
+      }
+
+      Adw.ButtonRow {
+        title: _("Pull");
+        activated => $pull();
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Raw subscription");
+
+      Adw.PreferencesRow {
+        CenterBox {
+          margin-top: 6;
+          margin-bottom: 6;
+          margin-start: 6;
+          margin-end: 6;
+          halign: fill;
+          hexpand: true;
+
+          [start]
+          Gtk.Button {
+            styles [
+              "suggested-action",
+            ]
+
+            halign: start;
+            valign: center;
+            clicked => $save();
+
+            Adw.ButtonContent {
+              label: _("Save");
+              icon-name: "arrow1-up-symbolic";
+            }
+          }
+
+          [center]
+          Box {
+            spacing: 12;
+
+            Gtk.Button {
+              styles [
+                "flat",
+              ]
+
+              valign: center;
+              halign: center;
+              clicked => $copy();
+              tooltip-text: _("Copy");
+              icon-name: "copy-symbolic";
+            }
+
+            Gtk.Button {
+              styles [
+                "flat",
+              ]
+
+              valign: center;
+              halign: center;
+              clicked => $paste();
+              tooltip-text: _("Paste");
+              icon-name: "clipboard-symbolic";
+            }
+          }
+
+          [end]
+          Gtk.Button {
+            styles [
+              "destructive-action",
+            ]
+
+            valign: center;
+            halign: end;
+            clicked => $reload();
+
+            Adw.ButtonContent {
+              label: _("Reload");
+              icon-name: "arrow1-down-symbolic";
+            }
+          }
+        }
+      }
+
+      Adw.PreferencesRow {
+        height-request: 100;
+
+        ScrolledWindow {
+          vscrollbar-policy: never;
+          hscrollbar-policy: automatic;
+
+          TextView {
+            top-margin: 10;
+            bottom-margin: 10;
+            right-margin: 10;
+            left-margin: 10;
+
+            styles [
+              "subscription-list",
+            ]
+
+            buffer: TextBuffer {
+              text: bind template.text bidirectional;
+            };
+          }
+        }
+      }
+    }
+  }
+}

@@ -23,6 +23,18 @@
  */
 namespace SingNeko.Utils {
     /*
+     * Create ~/.config/SingNeko
+     */
+    public void create_config_dir() {
+        var file = File.new_build_filename(Environment.get_user_config_dir(), "SingNeko");
+        try {
+            file.make_directory_with_parents();
+        } catch (Error err) {
+            warning("Failed to create %s", file.get_path());
+        }
+    }
+
+    /*
      * Vala use `meow-meow-meow` as in json serialization, but we need to use
      * `meow_meow_meow` to make our saves compatible with SingBox configuration.
      */

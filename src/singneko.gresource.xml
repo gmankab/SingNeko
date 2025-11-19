@@ -4,6 +4,7 @@
     <file preprocess="xml-stripblanks">gtk/window.ui</file>
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">gtk/outbound-row.ui</file>
+    <file preprocess="xml-stripblanks">gtk/subscription-dialog.ui</file>
     <file>base.json</file>
     <file>gtk/style.css</file>
   </gresource>

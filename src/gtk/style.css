@@ -7,30 +7,31 @@
     background: none;
 }
 
-.outbound-list>row {
+.outbound-list > row {
     border-radius: 10px;
 }
 
-.outbound-list>row:selected {
+.outbound-list > row:selected {
     background-color: alpha(var(--view-fg-color), 0.2);
 }
 
-.outbound-row>.schema {
+.outbound-row > .schema {
     background-color: alpha(var(--view-fg-color), 0.2);
     border-radius: 5px;
     padding: 5px;
     font-size: 13pt;
 }
 
-.singbox-status>sheet>stack>button {
+.singbox-status > sheet > stack > button {
     padding: 5px;
 }
 
-.singbox-log {
+.singbox-log,
+.subscription-list {
     background: none;
 }
 
-.singbox-status>sheet>stack>widget>scrolledwindow {
+.singbox-status > sheet > stack > widget > scrolledwindow {
     padding: 12px;
     padding-top: 32px;
 }

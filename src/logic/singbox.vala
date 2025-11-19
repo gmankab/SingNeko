@@ -57,6 +57,7 @@ class SingNeko.SingBox : Object {
     }
 
     private string get_outbound_config () {
+        Utils.create_config_dir ();
         var outbound_config = File.new_build_filename (Environment.get_user_config_dir (), "SingNeko", "Outbound.json");
         try {
             message ("Saving outbound config");
@@ -84,6 +85,10 @@ class SingNeko.SingBox : Object {
         if (singbox != null) {
             singbox.force_exit ();
             yield wait_for_singbox ();
+        }
+        if (outbound_selection.selected_item == null) {
+            singbox_message ("[SingNeko] No outbound available");
+            return;
         }
         singbox_message ("[SingNeko] Starting outbound: %s".printf (((Outbound.Outbound) outbound_selection.selected_item).name));
         setup_config_dir ();

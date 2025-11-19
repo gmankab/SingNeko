@@ -35,6 +35,7 @@ public class SingNeko.Application : Adw.Application {
                   SingBox.instance.singbox.force_exit ();
                   SingBox.instance.set_up.begin ();
               } },
+            { "subscription", () => new SubscriptionDialg ().present (active_window) },
             { "about", this.on_about_action },
             { "preferences", this.on_preferences_action },
             { "quit", () => {
@@ -45,6 +46,7 @@ public class SingNeko.Application : Adw.Application {
         this.add_action_entries (action_entries, this);
         this.set_accels_for_action ("app.restart-singbox", { "<primary>r" });
         this.set_accels_for_action ("app.quit", { "<primary>q" });
+        Subscription.load ();
     }
 
     public override void activate () {

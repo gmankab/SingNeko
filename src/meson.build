@@ -3,12 +3,14 @@ singneko_sources = [
   'application.vala',
   'gtk/window.vala',
   'gtk/outbound-row.vala',
+  'gtk/subscription-dialog.vala',
 ]
 
 singneko_deps = [
   config_dep,
   dependency('gtk4'),
   dependency('libadwaita-1', version: '>= 1.4'),
+  dependency('libsoup-3.0'),
 ]
 
 subdir('logic')
@@ -18,6 +20,7 @@ blueprints = custom_target(
   input: files(
     'gtk/help-overlay.blp',
     'gtk/outbound-row.blp',
+    'gtk/subscription-dialog.blp',
     'gtk/window.blp',
   ),
   output: '.',

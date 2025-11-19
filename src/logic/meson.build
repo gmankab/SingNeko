@@ -16,4 +16,5 @@ singneko_sources += [
   'logic/tls.vala',
   'logic/error.vala',
   'logic/singbox.vala',
+  'logic/subscription.vala',
 ]

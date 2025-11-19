@@ -23,29 +23,6 @@ namespace SingNeko {
         Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
         Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
         Intl.textdomain (Config.GETTEXT_PACKAGE);
-        uint8[] content = null;
-        try {
-            var sub_path = Environment.get_variable ("SUB_FILE");
-            File file = null;
-            if (sub_path != null) {
-                file = File.new_for_path (sub_path);
-            } else {
-                file = File.new_build_filename (Environment.get_user_config_dir (), "SingNeko", "subscription");
-            }
-            file.load_contents (null, out content, null);
-        } catch (Error err) {
-            error ("Failed to parse subscription %s", err.message);
-        }
-        var lines = ((string) content).split ("\n", -1);
-        foreach (var line in lines) {
-            if (line[0] == '#' && line != "")
-                continue;
-            try {
-                SingBox.instance.outbound_store.append (Outbound.Outbound.parse_uri (line));
-            } catch (Error err) {
-                warning ("Error during subscription parse: %s", err.message);
-            }
-        }
         var app = new SingNeko.Application ();
         return app.run (args);
     }
