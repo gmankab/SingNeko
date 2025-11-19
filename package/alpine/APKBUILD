@@ -12,6 +12,7 @@ makedepends="
 	gettext-dev
 	libadwaita-dev
 	libgee-dev
+	libsoup3-dev
 	meson
 	vala
 	blueprint-compiler-dev
