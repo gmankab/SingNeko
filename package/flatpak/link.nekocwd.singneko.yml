@@ -1,0 +1,39 @@
+id: link.nekocwd.singneko
+runtime: org.gnome.Platform
+runtime-version: '49'
+sdk: org.gnome.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.golang
+  - org.freedesktop.Sdk.Extension.vala
+command: singneko
+finish-args:
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=network
+  - --share=ipc
+  - --device=dri
+
+modules:
+  - name: sing-box
+    sources:
+      - go.mod.yml
+      - type: git
+        url: https://github.com/SagerNet/sing-box
+        tag: v1.12.12
+        commit: 54ed58499d7063136ed52dabf87d179d252425d0
+    buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/golang/bin
+      env:
+        GOBIN: /app/bin
+    build-commands:
+      - go install -mod=vendor ./cmd/sing-box
+  - name: SingNeko
+    sources:
+      - type: git
+        url: https://git.nekocwd.link/NekoCWD/SingNeko
+        commit: c4712d71e762608bd0fa74b4cc24640056699546
+    buildsystem: meson
+    build-options:
+      append-path: /usr/lib/sdk/vala/bin
+      prepend-ld-library-path: /usr/lib/sdk/vala/lib
