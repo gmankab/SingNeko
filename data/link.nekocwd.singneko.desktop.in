@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=singneko
 Exec=singneko
-Icon=io.gitlab.nekocwd.singneko
+Icon=link.nekocwd.singneko
 Terminal=false
 Type=Application
 Categories=Utility;

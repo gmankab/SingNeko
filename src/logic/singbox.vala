@@ -48,7 +48,7 @@ class SingNeko.SingBox : Object {
         if (!base_config.query_exists ()) {
             try {
                 message ("Saving base config");
-                base_config.replace_contents (resources_lookup_data ("/io/gitlab/nekocwd/singneko/base.json", ResourceLookupFlags.NONE).get_data (), null, false, FileCreateFlags.NONE, null);
+                base_config.replace_contents (resources_lookup_data ("/link/nekocwd/singneko/base.json", ResourceLookupFlags.NONE).get_data (), null, false, FileCreateFlags.NONE, null);
             } catch (Error err) {
                 warning ("Error during saving base config: %s", err.message);
             }

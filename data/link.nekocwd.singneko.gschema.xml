@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <schemalist gettext-domain="singneko">
     <schema
-        id="io.gitlab.nekocwd.singneko"
-        path="/io/gitlab/nekocwd/singularity/"
+        id="link.nekocwd.singneko"
+        path="/link/nekocwd/singularity/"
     >
         <key name="subscription-url" type="s">
             <default>""</default>

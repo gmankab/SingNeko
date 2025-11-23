@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-[GtkTemplate(ui = "/io/gitlab/nekocwd/singneko/gtk/outbound-row.ui")]
+[GtkTemplate(ui = "/link/nekocwd/singneko/gtk/outbound-row.ui")]
 class SingNeko.Ui.OutboundRow : Gtk.Box {
     [GtkChild]
     private unowned Gtk.Label schema;

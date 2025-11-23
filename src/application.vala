@@ -23,9 +23,9 @@ public class SingNeko.Application : Adw.Application {
 
     public Application () {
         Object (
-                application_id: "io.gitlab.nekocwd.singneko",
+                application_id: "link.nekocwd.singneko",
                 flags: ApplicationFlags.DEFAULT_FLAGS,
-                resource_base_path: "/io/gitlab/nekocwd/singneko"
+                resource_base_path: "/link/nekocwd/singneko"
         );
     }
 
@@ -53,7 +53,7 @@ public class SingNeko.Application : Adw.Application {
         base.activate ();
         if (!style_initialised) {
             var styling = new Gtk.CssProvider ();
-            styling.load_from_resource ("/io/gitlab/nekocwd/singneko/gtk/style.css");
+            styling.load_from_resource ("/link/nekocwd/singneko/gtk/style.css");
             Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (),
                                                        styling,
                                                        Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -68,7 +68,7 @@ public class SingNeko.Application : Adw.Application {
         string[] developers = { "Vasiliy Doylov (NekoCWD) <nekocwd@mainlining.org>" };
         var about = new Adw.AboutDialog () {
             application_name = "SingNeko",
-            application_icon = "io.gitlab.nekocwd.singneko",
+            application_icon = "link.nekocwd.singneko",
             developer_name = "NekoCWD",
             translator_credits = _("translator-credits"),
             version = Config.PACKAGE_VERSION,

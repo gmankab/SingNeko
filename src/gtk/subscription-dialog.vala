@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-[GtkTemplate (ui = "/io/gitlab/nekocwd/singneko/gtk/subscription-dialog.ui")]
+[GtkTemplate (ui = "/link/nekocwd/singneko/gtk/subscription-dialog.ui")]
 public class SingNeko.SubscriptionDialg : Adw.PreferencesDialog {
     public string text { get; set; default = ""; }
     public string url { get; set; default = ""; }

@@ -25,6 +25,6 @@ namespace SingNeko.Settings {
     public const string KEY_SUBSCRIPTION_PULL_ON_STARTUP = "subscription-pull-on-startup";
 
     public GLib.Settings get() {
-        return new GLib.Settings.with_path("io.gitlab.nekocwd.singneko", "/io/gitlab/nekocwd/singularity/");
+        return new GLib.Settings.with_path("link.nekocwd.singneko", "/link/nekocwd/singularity/");
     }
 }
