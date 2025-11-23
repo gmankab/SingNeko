@@ -1,4 +1,5 @@
 # SingNeko
+![Build](https://git.nekocwd.link/NekoCWD/SingNeko/badges/workflows/build-alpine.yaml/badge.svg?style=flat&label=Build&labelColor=black&logo=alpinelinux)
 
 SingBox wrapper.
 ## Screenshots
