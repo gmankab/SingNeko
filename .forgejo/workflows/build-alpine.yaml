@@ -3,6 +3,8 @@ run-name: Alpine build
 on:
   push:
   workflow_dispatch:
+  release:
+    types: [published]
 
 jobs:
   prepare:
@@ -36,4 +38,6 @@ jobs:
     needs: build
     runs-on: docker
     uses: actions/upload-alpine-package/.forgejo/workflows/upload-artifacts.yaml@main
+    with:
+      repo: ${{ forge.event_name == 'release' && 'stable' || 'nightly' }}
     secrets: inherit
