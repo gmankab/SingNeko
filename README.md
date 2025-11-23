@@ -14,6 +14,17 @@ SingBox wrapper.
   </tr>
 </table>
 
+### Supported protocols:
+* vless
+* trojan
+* shadowsocks
+### Supported transports:
+* grpc
+* http
+* http_upgrade
+* quic
+* ws
+
 ## ENV variables:
  - `SUB_FILE` = `.config/SingNeko/subscription` - path to subscription file
 
