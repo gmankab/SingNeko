@@ -57,3 +57,16 @@ Tip: replace `/usr` with `~/.local` to install into homedir
 ```
 meson install -C build
 ```
+
+## ToDo
+[ ] Add other protocols  
+  [ ] Hysteria  
+  [ ] Hysteria2  
+[ ] Rework subscription parser  
+  [ ] Add subscription generator  
+[ ] Add ability to save subscription as SingBox outbounds  
+[ ] Add Clash exporter parser  
+[ ] Add connection checking  
+[ ] Split singbox wrapper to lib  
+[ ] Add clash* backend  
+[ ] Make nice icon
