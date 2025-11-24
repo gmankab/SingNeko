@@ -27,7 +27,7 @@ modules:
       env:
         GOBIN: /app/bin
     build-commands:
-      - go install -mod=vendor ./cmd/sing-box
+      - go install -mod=vendor -tags with_gvisor,with_quic,with_dhcp,with_wireguard,with_utls,with_acme,with_clash_api,with_tailscale,with_ccm ./cmd/sing-box
   - name: SingNeko
     sources:
       - type: git
