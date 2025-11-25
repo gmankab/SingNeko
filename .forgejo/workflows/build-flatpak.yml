@@ -1,0 +1,63 @@
+name: Flatpak build
+run-name: Flatpak build
+on:
+  push:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        arch:
+          - x86_64
+          - aarch64
+    name: flatpak ${{ matrix.runner.arch }}
+    runs-on: docker
+    container:
+      image: ghcr.io/flathub-infra/flatpak-github-actions:freedesktop-25.08
+      options: --privileged
+    steps:
+      - uses: actions/checkout@v4
+      - name: build
+        run: |
+          echo '${{ secrets.gpg_key }}' | gpg --import
+          flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          flatpak-builder --arch='${{ matrix.arch }}' --disable-rofiles-fuse --user --gpg-sign='${{ vars.gpg_email }}' --install-deps-from=flathub --repo=repo build package/flatpak/link.nekocwd.singneko.yml
+          flatpak build-bundle repo 'singneko-${{ matrix.arch }}.flatpak' link.nekocwd.singneko
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: singneko-${{ matrix.arch }}
+          path: singneko-${{ matrix.arch }}.flatpak
+
+  flatpak-ostree-repo-merge:
+    needs: build
+    runs-on: docker
+    container:
+      image: ghcr.io/flathub-infra/flatpak-github-actions:freedesktop-25.08
+      options: --privileged
+    steps:
+      - uses: actions/checkout@v4
+      - name: import gpg key
+        run: |
+          echo '${{ secrets.gpg_key }}' | gpg --import
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: merge repo
+        env:
+          repo: ${{ forge.event_name == 'release' && 'stable' || 'nightly' }}
+        run: |
+          mkdir -p out/flatpak/$repo
+          cp package/flatpak/$repo.flatpakrepo out
+          ostree init --mode=archive-z2 --repo out/flatpak/$repo
+          for bundle in artifacts/*/*.flatpak ; do
+            flatpak build-import-bundle out/flatpak/$repo $bundle
+          done
+          flatpak build-update-repo --gpg-sign='${{ vars.gpg_email }}' out/flatpak/$repo
+      - uses: actions/upload-artifact@v4
+        with:
+          name: flatpak-ostree-repo-merged
+          path: out
