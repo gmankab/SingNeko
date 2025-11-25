@@ -18,9 +18,12 @@ jobs:
     name: flatpak ${{ matrix.runner.arch }}
     runs-on: ${{ matrix.runner.name }}
     container:
-      image: ghcr.io/flathub-infra/flatpak-github-actions:freedesktop-25.08
+      image: quay.io/fedora/fedora-toolbox:43
       options: --privileged
     steps:
+      - name: deps
+        run: |
+          sudo dnf -y install node flatpak flatpak-builder qemu-user-binfmt
       - uses: actions/checkout@v4
       - name: build
         run: |
